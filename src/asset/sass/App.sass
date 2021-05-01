@@ -10,4 +10,18 @@ table
   border-collapse: collapse
 table, td, th
   border: 1px solid black
-  padding: 5px
+  padding: 10px
+  tr
+    &:nth-child(even)
+      background-color: #4abbdc
+    &:nth-child(odd)
+      background-color: #F7874A
+  th
+    background-color: lightblue
+
+.hide-columns
+  display: flex
+  flex-direction: row
+  input
+    margin-left: 10px
+    min-width: 20px

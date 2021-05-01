@@ -19,6 +19,8 @@ const Table = () => {
     setPageSize,
     setColumnOrder,
     visibleColumns,
+    getToggleHideAllColumnsProps,
+    allColumns,
     prepareRow
   } = useTable(
     {
@@ -39,9 +41,21 @@ const Table = () => {
     }
     return randomArr
   }
-
   const changeColumnOrder = () => setColumnOrder(columnOrder(visibleColumns.map(column => column.id)))
   return <div>
+    <div className="hide-columns">
+      <input type="checkBox" id="allColumns" {...getToggleHideAllColumnsProps()} />
+      <label htmlFor="allColumns">All columns</label>
+
+      {allColumns.map(column => (
+        <div key={column.id}>
+          <input type="checkbox" id='column' {...column.getToggleHiddenProps()} />
+          <label htmlFor="column">{column.Header}</label>
+        </div>
+      ))}
+    </div>
+
+    <br></br>
     <button onClick={changeColumnOrder}>change column order</button>
     <table {...getTableProps()}>
       <thead>
