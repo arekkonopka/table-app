@@ -1,6 +1,6 @@
 import mockData from '../asset/MOCK_DATA.json'
 import COLUMNS from './columns'
-import { useTable, useSortBy, usePagination, useRowSelect } from 'react-table'
+import { useTable, useSortBy, usePagination, useRowSelect, useGroupBy, useColumnOrder } from 'react-table'
 import { useMemo } from 'react'
 
 
@@ -17,6 +17,8 @@ const Table = () => {
     previousPage,
     state,
     setPageSize,
+    setColumnOrder,
+    visibleColumns,
     prepareRow
   } = useTable(
     {
@@ -25,11 +27,22 @@ const Table = () => {
     },
     useSortBy,
     usePagination,
+    useColumnOrder,
   )
 
+  const columnOrder = (arr) => {
+    const columnArray = [...arr]
+    const randomArr = []
+    while (columnArray.length) {
+      const random = Math.floor(Math.random() * columnArray.length)
+      randomArr.push(columnArray.splice(random, 1)[0])
+    }
+    return randomArr
+  }
 
-
+  const changeColumnOrder = () => setColumnOrder(columnOrder(visibleColumns.map(column => column.id)))
   return <div>
+    <button onClick={changeColumnOrder}>change column order</button>
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
