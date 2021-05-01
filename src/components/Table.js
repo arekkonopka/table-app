@@ -1,6 +1,6 @@
 import mockData from '../asset/MOCK_DATA.json'
 import COLUMNS from './columns'
-import { useTable, useSortBy } from 'react-table'
+import { useTable, useSortBy, usePagination, useRowSelect } from 'react-table'
 import { useMemo } from 'react'
 
 
@@ -12,15 +12,22 @@ const Table = () => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
+    nextPage,
+    previousPage,
+    state,
+    setPageSize,
     prepareRow
   } = useTable(
     {
       columns,
-      data
+      data,
     },
-    useSortBy
+    useSortBy,
+    usePagination,
   )
+
+
 
   return <div>
     <table {...getTableProps()}>
@@ -31,27 +38,37 @@ const Table = () => {
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render("Header")}
                 {column.isSorted ? (column.isSortedDesc ? <i class="fas fa-sort-up"></i> : <i class="fas fa-sort-down"></i>) : ""}
-                {console.log(column)}
               </th>
             ))}
           </tr>
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
+        {page.map(row => {
           prepareRow(row)
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
               })}
-
             </tr>
           )
         })}
       </tbody>
-
     </table>
+    <div className="pagination">
+      <button onClick={() => previousPage()}>previousPage</button>
+      <button onClick={() => nextPage()}>nextPage</button>
+      <p>Page number: {state.pageIndex + 1}</p>
+      <p>Choose size:</p> <select
+        value={state.pageSize}
+        onChange={(e) => setPageSize(Number(e.target.value))}>
+        {[10, 20, 30].map(size => {
+          return <option key={size} value={size}>{size}</option>
+        })}
+      </select>
+
+    </div>
   </div>
 }
 
