@@ -30,7 +30,7 @@ const Table = () => {
             {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render("Header")}
-                {column.isSorted ? column.isSortedDesc ? <i class="fas fa-sort-up"></i> : <i class="fas fa-sort-down"></i> : ""}
+                {column.isSorted ? (column.isSortedDesc ? <i class="fas fa-sort-up"></i> : <i class="fas fa-sort-down"></i>) : ""}
                 {console.log(column)}
               </th>
             ))}

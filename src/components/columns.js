@@ -17,7 +17,7 @@ const COLUMNS = [
   },
   {
     Header: 'Data of birth',
-    accessor: 'date_of_birth'
+    accessor: 'data_of_birth'
   },
   {
     Header: 'Age',

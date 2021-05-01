@@ -1,4 +1,4 @@
-import './App.css';
+import './asset/sass/App.sass';
 import Table from './components/Table'
 
 function App() {
