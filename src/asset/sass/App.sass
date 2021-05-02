@@ -1,0 +1,27 @@
+body
+  margin: 0
+  padding: 0
+  background-color: lightblue
+  display: flex
+  justify-content: center
+  text-align: center
+table
+  margin-top: 10px
+  border-collapse: collapse
+table, td, th
+  border: 1px solid black
+  padding: 10px
+  tr
+    &:nth-child(even)
+      background-color: #4abbdc
+    &:nth-child(odd)
+      background-color: #F7874A
+  th
+    background-color: lightblue
+
+.hide-columns
+  display: flex
+  flex-direction: row
+  input
+    margin-left: 10px
+    min-width: 20px
