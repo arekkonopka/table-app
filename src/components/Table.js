@@ -23,7 +23,6 @@ const Table = () => {
     getToggleHideAllColumnsProps,
     allColumns,
     prepareRow,
-
   } = useTable(
     {
       columns,
@@ -46,6 +45,14 @@ const Table = () => {
   }
   const changeColumnOrder = () => setColumnOrder(columnOrder(visibleColumns.map(column => column.id)))
 
+
+  const sticky = (column) => {
+    const arr = [...columns]
+    arr.splice(column.id, 1)
+    arr.unshift(column)
+    setColumnOrder(arr.map((a) => a.id))
+  }
+
   return <div className="table">
     <div className="hide-columns">
       <label>
@@ -63,9 +70,9 @@ const Table = () => {
         </div>
       ))}
     </div>
-
     <br></br>
     <button onClick={changeColumnOrder}>change column order</button>
+
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
@@ -73,21 +80,7 @@ const Table = () => {
             {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                 <label>
-                  <input type="checkbox" onChange={(e) => {
-                    const arr = visibleColumns
-                    // arr.splice(column.depth, 1)
-                    // console.log(arr)
-                    // const fixedArr = arr.push(column)
-                    // if (e.target.checked) {
-                    //   e.target.parentElement.parentElement.className = 'sticky'
-                    // } else {
-                    //   e.target.parentElement.parentElement.className = ''
-                    // }
-                    // console.log(e.target.parentElement.parentElement.nextElementSibling)
-                    console.log(column)
-                    // console.log(...columns.map((column) => console.log('column', column)))
-
-                  }} />
+                  <input type="checkbox" onChange={() => sticky(column)} />
                 </label>
                 {column.render("Header")}
                 {column.isSorted ? (column.isSortedDesc ? <i className="fas fa-sort-up"></i> : <i className="fas fa-sort-down"></i>) : ""}
