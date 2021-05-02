@@ -1,7 +1,7 @@
 const COLUMNS = [
   {
     Header: 'Id',
-    accessor: 'id'
+    accessor: 'id',
   },
   {
     Header: 'First name',
@@ -22,7 +22,7 @@ const COLUMNS = [
   {
     Header: 'Age',
     accessor: 'age'
-  },
+  }
 ]
 
 

@@ -1,7 +1,8 @@
 import mockData from '../asset/MOCK_DATA.json'
 import COLUMNS from './columns'
-import { useTable, useSortBy, usePagination, useRowSelect, useGroupBy, useColumnOrder } from 'react-table'
+import { useTable, useSortBy, usePagination, useColumnOrder } from 'react-table'
 import { useMemo } from 'react'
+import { useSticky } from 'react-table-sticky'
 
 
 const Table = () => {
@@ -21,7 +22,8 @@ const Table = () => {
     visibleColumns,
     getToggleHideAllColumnsProps,
     allColumns,
-    prepareRow
+    prepareRow,
+
   } = useTable(
     {
       columns,
@@ -30,6 +32,7 @@ const Table = () => {
     useSortBy,
     usePagination,
     useColumnOrder,
+    useSticky
   )
 
   const columnOrder = (arr) => {
@@ -42,15 +45,21 @@ const Table = () => {
     return randomArr
   }
   const changeColumnOrder = () => setColumnOrder(columnOrder(visibleColumns.map(column => column.id)))
-  return <div>
-    <div className="hide-columns">
-      <input type="checkBox" id="allColumns" {...getToggleHideAllColumnsProps()} />
-      <label htmlFor="allColumns">All columns</label>
 
-      {allColumns.map(column => (
-        <div key={column.id}>
-          <input type="checkbox" id='column' {...column.getToggleHiddenProps()} />
-          <label htmlFor="column">{column.Header}</label>
+  return <div className="table">
+    <div className="hide-columns">
+      <label>
+        <input type="checkBox" {...getToggleHideAllColumnsProps()} />
+      All columns
+      </label>
+
+
+      {allColumns.map((column, i) => (
+        <div key={i}>
+          <label>
+            <input type="checkbox" {...column.getToggleHiddenProps()} />
+            {column.Header}
+          </label>
         </div>
       ))}
     </div>
@@ -63,8 +72,25 @@ const Table = () => {
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <label>
+                  <input type="checkbox" onChange={(e) => {
+                    const arr = visibleColumns
+                    // arr.splice(column.depth, 1)
+                    // console.log(arr)
+                    // const fixedArr = arr.push(column)
+                    // if (e.target.checked) {
+                    //   e.target.parentElement.parentElement.className = 'sticky'
+                    // } else {
+                    //   e.target.parentElement.parentElement.className = ''
+                    // }
+                    // console.log(e.target.parentElement.parentElement.nextElementSibling)
+                    console.log(column)
+                    // console.log(...columns.map((column) => console.log('column', column)))
+
+                  }} />
+                </label>
                 {column.render("Header")}
-                {column.isSorted ? (column.isSortedDesc ? <i class="fas fa-sort-up"></i> : <i class="fas fa-sort-down"></i>) : ""}
+                {column.isSorted ? (column.isSortedDesc ? <i className="fas fa-sort-up"></i> : <i className="fas fa-sort-down"></i>) : ""}
               </th>
             ))}
           </tr>
