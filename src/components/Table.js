@@ -76,7 +76,7 @@ const Table = () => {
     <div className="column-order">
       <h3>Sticky column</h3>
       {columns.map(column => (
-        <label>
+        <label key={column.id}>
           <input type="checkbox" onChange={() => sticky(column)} />
           {column.Header}
         </label>
