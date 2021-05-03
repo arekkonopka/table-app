@@ -2,7 +2,6 @@ import mockData from '../asset/MOCK_DATA.json'
 import COLUMNS from './columns'
 import { useTable, useSortBy, usePagination, useColumnOrder } from 'react-table'
 import { useMemo } from 'react'
-import { useSticky } from 'react-table-sticky'
 
 
 const Table = () => {
@@ -31,7 +30,6 @@ const Table = () => {
     useSortBy,
     usePagination,
     useColumnOrder,
-    useSticky
   )
 
   const columnOrder = (arr) => {
@@ -55,23 +53,37 @@ const Table = () => {
 
   return <div className="table">
     <div className="hide-columns">
-      <label>
-        <input type="checkBox" {...getToggleHideAllColumnsProps()} />
+      <h3>Hide column</h3>
+
+      <div className='flex-hide-columns'>
+        <label>
+          <input type="checkBox" {...getToggleHideAllColumnsProps()} />
       All columns
       </label>
 
-
-      {allColumns.map((column, i) => (
-        <div key={i}>
-          <label>
-            <input type="checkbox" {...column.getToggleHiddenProps()} />
-            {column.Header}
-          </label>
-        </div>
-      ))}
+        {allColumns.map((column, i) => (
+          <div key={i}>
+            <label>
+              <input type="checkbox" {...column.getToggleHiddenProps()} />
+              {column.Header}
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
     <br></br>
-    <button onClick={changeColumnOrder}>change column order</button>
+
+    <div className="column-order">
+      <h3>Sticky column</h3>
+      {columns.map(column => (
+        <label>
+          <input type="checkbox" onChange={() => sticky(column)} />
+          {column.Header}
+        </label>
+      ))}
+
+    </div>
+    <button className="random-order-btn" onClick={changeColumnOrder}>Random column order</button>
 
     <table {...getTableProps()}>
       <thead>
@@ -79,9 +91,7 @@ const Table = () => {
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                <label>
-                  <input type="checkbox" onChange={() => sticky(column)} />
-                </label>
+
                 {column.render("Header")}
                 {column.isSorted ? (column.isSortedDesc ? <i className="fas fa-sort-up"></i> : <i className="fas fa-sort-down"></i>) : ""}
               </th>

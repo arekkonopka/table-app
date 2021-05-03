@@ -3,7 +3,6 @@ const COLUMNS = [
     Header: 'Id',
     accessor: 'id',
     id: '0',
-    sticky: "left",
   },
   {
     Header: 'First name',

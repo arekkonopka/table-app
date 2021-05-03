@@ -18,8 +18,15 @@ table, td, th
   border: 1px solid black
   td
     padding: 3px 0
-  tr
+    position: realtive
+    &:nth-child(1)
+      background-color: #F7874A
+      position: -webkit-sticky
+      position: sticky
+      top: 0
+      left: 0
 
+  tr
     &:nth-child(even)
       background-color: #4abbdc
     &:nth-child(odd)
@@ -28,17 +35,34 @@ table, td, th
     background-color: lightblue
     min-width: 150px
     padding: 5px
-  .sticky
-    position: absolute
-    top: 0
-    left: 0
-
+    &:nth-child(1)
+      position: -webkit-sticky
+      position: sticky
+      top: 0
+      left: 0
 .hide-columns
-  display: flex
-  flex-direction: row
-  justify-content: center
+  margin: 10px
+  h3
+    margin: 5px
+  .flex-hide-columns
+    display: flex
+    flex-direction: row
+    justify-content: center
   label
     cursor: pointer
+    min-width: 20px
     input
       margin-left: 10px
-      min-width: 20px
+
+.column-order
+  margin: 10px
+  h3
+    margin: 5px
+  label
+    cursor: pointer
+    width: 120px
+    input
+      margin-left: 10px
+
+.random-order-btn
+  margin: 10px
